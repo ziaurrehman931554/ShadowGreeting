@@ -7,9 +7,13 @@ Two small, always-on desktop widgets for Windows, written in a single file each 
   rotating quote.
 - **Shadow Clock** — a big font clock with the weekday and date, in the same visual style.
 
-| | |
-|---|---|
-| ![Shadow Greeting](docs/preview.png) | ![Shadow Clock](docs/clock.png) |
+**Shadow Greeting**
+
+![Shadow Greeting](docs/preview.png)
+
+**Shadow Clock**
+
+![Shadow Clock](docs/clock.png)
 
 Both draw themselves with GDI+ into a per-pixel-alpha layered window, so they float on the
 desktop with no background box and no taskbar entry. Both keep the normal arrow cursor.
