@@ -13,14 +13,14 @@ global UserName := "ZIA"
 ; ---- DPI: use physical pixels so layered-window coordinates are consistent ----
 DllCall("SetProcessDPIAware")
 
-; ===================== CONFIG (same look/feel as Shadow Clock) =====================
+; ===================== CONFIG (same look/feel as ZClock) =====================
 
 global W := 600
 global H := 248
 global BottomMargin := 120     ; ~half an inch higher again (about 1 inch off the bottom)
 
 ; Single soft fade applied to every element (text, outline, icon, divider).
-; Shadow Clock uses per-element alpha; this multiplies those alphas by one value.
+; ZClock uses per-element alpha; this multiplies those alphas by one value.
 global FadeAll := 0.87
 
 ; fonts
@@ -76,7 +76,7 @@ global FeelsAlpha    := 88     ; ~30%  detail line
 global QuoteAlpha    := 102    ; ~35%
 global AuthorAlpha   := 102    ; ~35%
 
-; red text outline, identical to Shadow Clock
+; red text outline, identical to ZClock
 global UseBorder    := true
 global BorderColor  := 0xE53935
 global BorderAlpha  := 150
@@ -110,7 +110,7 @@ global LocationCity := ""
 global LocationMenuLabel := "Auto"
 
 ; chosen location (and auto/manual mode) survives restarts and reboots
-global SettingsDir  := A_AppData "\ShadowGreeting"
+global SettingsDir  := A_AppData "\ZGreeting"
 global SettingsFile := SettingsDir "\settings.ini"
 
 ; window position + drag lock (also saved in the same INI, section [Window])
@@ -186,7 +186,7 @@ WS_VISIBLE := 0x10000000
 hWnd := DllCall("CreateWindowExW"
     , "uint", WS_EX_LAYERED | WS_EX_TOOLWINDOW | WS_EX_NOACTIVATE
     , "str", "Static"
-    , "str", "ShadowGreeting"
+    , "str", "ZGreeting"
     , "uint", WS_POPUP | WS_VISIBLE
     , "int", PosX, "int", PosY, "int", W, "int", H
     , "ptr", 0, "ptr", 0, "ptr", 0, "ptr", 0)
@@ -194,13 +194,13 @@ hWnd := DllCall("CreateWindowExW"
 ; The default "Static" window proc answers WM_NCHITTEST with HTTRANSPARENT, so
 ; every click fell through to the desktop. Report HTCLIENT instead so the whole
 ; widget can be clicked and dragged.
-global WndProcCallback := CallbackCreate(ShadowWndProc, "Fast", 4)
+global WndProcCallback := CallbackCreate(ZWndProc, "Fast", 4)
 global OldWndProc := DllCall("SetWindowLongPtrW", "ptr", hWnd, "int", -4, "ptr", WndProcCallback, "ptr")
 
 ; restore the last dragged position and the drag lock before anything is drawn
 LoadWindowSettings()
 
-ShadowWndProc(h, m, w, l) {
+ZWndProc(h, m, w, l) {
     global OldWndProc
     if (m = 0x0084)                     ; WM_NCHITTEST
         return 1                        ; HTCLIENT
@@ -294,7 +294,7 @@ A_TrayMenu.Add("Refresh Quotes", LoadQuotes)
 A_TrayMenu.Add()
 A_TrayMenu.Add("Toggle Border (" (UseBorder ? "On" : "Off") ")", ToggleBorder)
 A_TrayMenu.Add("Exit", (*) => ExitApp())
-A_IconTip := "Shadow Greeting"
+A_IconTip := "ZGreeting"
 
 ; ---- helpers ----
 ; Vertical-only stretch for the greeting: taller glyphs, same width.
@@ -641,7 +641,7 @@ HttpGet(url) {
     whr := ComObject("WinHttp.WinHttpRequest.5.1")
     whr.Open("GET", url, false)
     whr.SetTimeouts(5000, 5000, 5000, 10000)
-    whr.SetRequestHeader("User-Agent", "ShadowGreeting/1.0 (AutoHotkey)")
+    whr.SetRequestHeader("User-Agent", "ZGreeting/1.0 (AutoHotkey)")
     whr.Send()
     if (whr.Status < 200 || whr.Status >= 300)
         throw Error("HTTP " whr.Status)
@@ -858,7 +858,7 @@ GetAutoLocation() {
 
 UpdateLocationMenu(label) {
     global LocationMenuLabel
-    A_IconTip := "Shadow Greeting (" label ")"
+    A_IconTip := "ZGreeting (" label ")"
     if (label = LocationMenuLabel)
         return
     old := "Set Location (" LocationMenuLabel ")"
@@ -1421,7 +1421,7 @@ Render() {
 ; ---- tray actions ----
 SetName(*) {
     global UserName
-    ib := InputBox("Enter your name:", "Shadow Greeting", "w320 h130", UserName)
+    ib := InputBox("Enter your name:", "ZGreeting", "w320 h130", UserName)
     if (ib.Result != "OK")
         return
     newName := Trim(ib.Value)
@@ -1439,7 +1439,7 @@ SetName(*) {
 SetLocation(*) {
     global LocationCity
 
-    picker := Gui("+AlwaysOnTop +ToolWindow", "Shadow Greeting - Set Location")
+    picker := Gui("+AlwaysOnTop +ToolWindow", "ZGreeting - Set Location")
     picker.SetFont("s10", "Segoe UI")
     picker.MarginX := 12
     picker.MarginY := 12

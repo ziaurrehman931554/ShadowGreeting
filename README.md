@@ -1,19 +1,20 @@
-# Shadow Desktop Widgets
+# ZWidgets
 
-Two small, always-on desktop widgets for Windows, written in a single file each with
+Three small, always-on desktop widgets for Windows, written in a single file each with
 [AutoHotkey v2](https://www.autohotkey.com/) — no Rainmeter, no runtime, no installers.
 
-- **Shadow Greeting** — a large dim greeting, live weather you can click through, and a
+- **ZGreeting** — a large dim greeting, live weather you can click through, and a
   rotating quote.
-- **Shadow Clock** — a big font clock with the weekday and date, in the same visual style.
+- **ZClock** — a big font clock with the weekday and date, in the same visual style.
+- **ZNotes** - a compact dark notes widget with text and checklist modes.
 
-**Shadow Greeting**
+**ZGreeting**
 
-![Shadow Greeting](docs/preview.png)
+![ZGreeting](docs/preview.png)
 
-**Shadow Clock**
+**ZClock**
 
-![Shadow Clock](docs/clock.png)
+![ZClock](docs/clock.png)
 
 Both draw themselves with GDI+ into a per-pixel-alpha layered window, so they float on the
 desktop with no background box and no taskbar entry. Both keep the normal arrow cursor.
@@ -25,7 +26,7 @@ desktop with no background box and no taskbar entry. Both keep the normal arrow 
 - Windows 10 or 11
 - [AutoHotkey v2.0](https://www.autohotkey.com/) installed (`AutoHotkey64.exe`)
 
-`ShadowClock.ahk` also uses two display fonts that are **not** included here:
+`ZClock.ahk` also uses two display fonts that are **not** included here:
 
 | Font | Used for |
 |---|---|
@@ -33,7 +34,7 @@ desktop with no background box and no taskbar entry. Both keep the normal arrow 
 | `la Compagnie des Ombres` | weekday |
 
 Install them first, otherwise Windows substitutes a fallback font and the spacing changes.
-`ShadowGreeting.ahk` uses only Arial and can run as-is.
+`ZGreeting.ahk` uses only Arial and can run as-is.
 
 ---
 
@@ -42,7 +43,7 @@ Install them first, otherwise Windows substitutes a fallback font and the spacin
 Double-click the `.ahk` file, or from a terminal:
 
 ```powershell
-& "C:\Program Files\AutoHotkey\v2\AutoHotkey64.exe" ".\ShadowGreeting.ahk"
+& "C:\Program Files\AutoHotkey\v2\AutoHotkey64.exe" ".\ZGreeting.ahk"
 ```
 
 Each script runs as its own tray icon. Right-click the tray icon for options, `Exit` to quit.
@@ -55,9 +56,9 @@ To start with Windows, put a shortcut to the script in:
 
 ---
 
-## Shadow Greeting
+## ZGreeting
 
-`ShadowGreeting.ahk` — 600 × 248 px, centered near the bottom of the screen.
+`ZGreeting.ahk` — 600 × 248 px, centered near the bottom of the screen.
 
 ### What it shows
 
@@ -116,7 +117,7 @@ layout, unplugged screen), it is clamped back onto the visible desktop.
 Location, window position and the drag lock live in:
 
 ```
-%AppData%\ShadowGreeting\settings.ini
+%AppData%\ZGreeting\settings.ini
 ```
 
 ```ini
@@ -137,7 +138,7 @@ Delete the file to go back to automatic IP-based location and the default positi
 
 ### Configuration
 
-Everything adjustable is a constant near the top of `ShadowGreeting.ahk`, and the display
+Everything adjustable is a constant near the top of `ZGreeting.ahk`, and the display
 name is deliberately in one place only:
 
 ```ahk
@@ -172,9 +173,9 @@ what you see.
 
 ---
 
-## Shadow Clock
+## ZClock
 
-`ShadowClock.ahk` — 600 × 330 px, horizontally centered at 10% of the screen height.
+`ZClock.ahk` — 600 × 330 px, horizontally centered at 10% of the screen height.
 It renders once a second and has no network or file access.
 
 - **Time** — 12-hour (`h:mm`) or 24-hour (`HH:mm`), large, semi-transparent
@@ -208,6 +209,10 @@ Set `UseBorder := false` for no outline.
 
 ---
 
+## ZNotes
+
+`ZNotes.ahk` is a compact dark desktop notes widget with plain-text and checklist modes. It stores notes under `%AppData%\ZNotes` and supports tray-only closing, scrolling, and optional corner resizing.
+
 ## Data sources
 
 No API keys, no accounts.
@@ -221,7 +226,7 @@ No API keys, no accounts.
 
 Privacy: an IP-based lookup only happens while the location is set to automatic. Otherwise
 just the saved coordinates are sent to Open-Meteo. Nothing is sent anywhere by
-`ShadowClock.ahk`.
+`ZClock.ahk`.
 
 ---
 
@@ -239,10 +244,11 @@ just the saved coordinates are sent to Open-Meteo. Nothing is sent anywhere by
 ## Repository layout
 
 ```
-ShadowGreeting.ahk   greeting + live weather + quotes
-ShadowClock.ahk      large-type clock
-docs/preview.png     screenshot of Shadow Greeting
-docs/clock.png       screenshot of Shadow Clock
+ZGreeting.ahk   greeting + live weather + quotes
+ZClock.ahk      large-type clock
+ZNotes.ahk      text and checklist notes
+docs/preview.png     screenshot of ZGreeting
+docs/clock.png       screenshot of ZClock
 ```
 
 ## Notes

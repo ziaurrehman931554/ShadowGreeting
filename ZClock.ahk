@@ -4,7 +4,7 @@
 ; ---- DPI: use physical pixels so layered-window coordinates are consistent ----
 DllCall("SetProcessDPIAware")
 
-; ===================== CONFIG (matches Shadow Clock - 12H - With Border) =====================
+; ===================== CONFIG (matches ZClock - 12H - With Border) =====================
 global Mode := "12H"          ; "12H" or "24H"
 global UseBorder := true      ; red outline around time, weekday, date text
 global W := 600
@@ -74,7 +74,7 @@ WS_VISIBLE := 0x10000000
 hWnd := DllCall("CreateWindowExW"
     , "uint", WS_EX_LAYERED | WS_EX_TOOLWINDOW | WS_EX_NOACTIVATE
     , "str", "Static"
-    , "str", "ShadowClock"
+    , "str", "ZClock"
     , "uint", WS_POPUP | WS_VISIBLE
     , "int", PosX, "int", PosY, "int", W, "int", H
     , "ptr", 0, "ptr", 0, "ptr", 0, "ptr", 0)
@@ -129,7 +129,7 @@ A_TrayMenu.Delete()
 A_TrayMenu.Add("Toggle 12/24H (" Mode ")", ToggleMode)
 A_TrayMenu.Add("Toggle Border (" (UseBorder ? "On" : "Off") ")", ToggleBorder)
 A_TrayMenu.Add("Exit", (*) => ExitApp())
-A_IconTip := "Shadow Clock"
+A_IconTip := "ZClock"
 
 ; ---- helpers ----
 GetFont(family, size) {
